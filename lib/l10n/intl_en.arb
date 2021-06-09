@@ -1,0 +1,16 @@
+{
+  "@@last_modified": "2019-06-27T22:25:57.081431",
+  
+   "topRatedMovies":"Top rated movies",
+   "popularMovies":"Popular movies",
+   "series": "Series",
+   "movies": "Movies",
+   "search": "Search",
+   "enterKeyword": "Enter Keyword",
+   "favoriteMovies": "favorite movies",
+   "language": "language",
+   "There is no favorite movies":"There is no favorite movies",
+   "all": "All",
+     "No results found":"No results found",
+     "Clear history":"Clear history",
+}

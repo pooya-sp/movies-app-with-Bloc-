@@ -1,0 +1,15 @@
+{
+  "@@last_modified": "2019-06-27T23:38:38.868199",
+  "topRatedMovies": "برترین فیلم ها",
+  "popularMovies":  "محبوب ترین فیلم ها",
+  "series": "برترین سریال ها",
+  "all": "همه",
+  "movies": "فیلم ها",
+   "search": "جستجو",
+   "enterKeyword": "انتخاب کلید واژه",
+   "favoriteMovies": "فیلم های مورد علاقه ",
+   "There is no favorite movies": "هیچ فیلم مورد علاقه ای وجود ندارد ",
+   "language": "زبان",
+     "No results found":"هیچ نتیجه ای یافت نشد",
+       "Clear history":"حذف تاریخچه",
+}
