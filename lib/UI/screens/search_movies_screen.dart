@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen.dart';
+import 'package:movies_app/business_logic/Blocs/movies_bloc.dart';
+import 'package:movies_app/helpers/config.dart';
+import 'package:movies_app/data/modals/movie.dart';
 import 'package:movies_app/helpers/db_helper.dart';
 import 'package:movies_app/locale/app_localization.dart';
-import 'package:movies_app/modals/config.dart';
-import 'package:movies_app/providers/movies_provider.dart';
-import 'package:movies_app/screens/movies_detail_screen.dart';
+
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -13,7 +16,7 @@ class SearchData extends SearchDelegate<String> {
   BuildContext context;
   List<Movie> suggestionList;
   SearchData(this.context) : super(textInputAction: TextInputAction.done) {
-    allMovies = Provider.of<MoviesProvider>(context, listen: false).allMovies;
+    allMovies = context.read<MoviesBloc>().allMovies;
     DBHelper.getData('movies_table').then((value) {
       recentSearches = value
           .map(
@@ -22,7 +25,6 @@ class SearchData extends SearchDelegate<String> {
               title: element['title'],
               overview: element['overview'],
               id: element['id'],
-              isFavorite: element['isFavorite'] == 1 ? true : false,
             ),
           )
           .toList();
@@ -151,7 +153,6 @@ class SearchData extends SearchDelegate<String> {
                           'title': response.title,
                           'overview': response.overview,
                           'id': response.id,
-                          'isFavorite': response.isFavorite ? 1 : 0,
                         });
                       },
                       leading: CircleAvatar(

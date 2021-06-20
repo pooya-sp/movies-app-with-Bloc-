@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/modals/config.dart';
+import 'package:movies_app/helpers/config.dart';
 
 class MyTheme with ChangeNotifier {
   MyTheme() {

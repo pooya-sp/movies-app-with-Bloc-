@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/UI/screens/favorite_movies_screen.dart';
+import 'package:movies_app/UI/screens/language_screen.dart';
+import 'package:movies_app/helpers/config.dart';
 import 'package:movies_app/locale/app_localization.dart';
-import 'package:movies_app/modals/config.dart';
-import 'package:movies_app/screens/favorite_movies_screen.dart';
-import 'package:movies_app/screens/language_screen.dart';
 
-enum AppDrawerState {
+enum SelectedPage {
   MOVIES,
   FAVORITES,
   LANGUAGE,
@@ -18,9 +18,7 @@ class AppDrawer extends StatefulWidget {
   factory AppDrawer() {
     return _instance;
   }
-  var _isMovieSelected = true;
-  var _isFavoriteSelected = false;
-  var _isLanguageSelected = false;
+  SelectedPage selectedPage = SelectedPage.MOVIES;
   @override
   _AppDrawerState createState() => _AppDrawerState();
 }
@@ -55,7 +53,7 @@ class _AppDrawerState extends State<AppDrawer> {
             height: 10,
           ),
           ListTile(
-              selected: widget._isMovieSelected,
+              selected: widget.selectedPage == SelectedPage.MOVIES,
               selectedTileColor: _isDark ? Colors.red : Colors.green,
               leading: Icon(
                 Icons.movie,
@@ -64,14 +62,12 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text(AppLocalization.of(context).movies),
               onTap: () {
                 setState(() {
-                  widget._isMovieSelected = true;
-                  widget._isFavoriteSelected = false;
-                  widget._isLanguageSelected = false;
+                  widget.selectedPage = SelectedPage.MOVIES;
                 });
                 Navigator.of(context).pushReplacementNamed('/');
               }),
           ListTile(
-              selected: widget._isFavoriteSelected,
+              selected: widget.selectedPage == SelectedPage.FAVORITES,
               selectedTileColor: _isDark ? Colors.red : Colors.green,
               leading: Icon(
                 Icons.favorite,
@@ -80,16 +76,14 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text(AppLocalization.of(context).favoriteMovies),
               onTap: () {
                 setState(() {
-                  widget._isMovieSelected = false;
-                  widget._isFavoriteSelected = true;
-                  widget._isLanguageSelected = false;
+                  widget.selectedPage = SelectedPage.FAVORITES;
                 });
                 Navigator.of(context)
                     .pushReplacementNamed(FavoriteMoviesScreen.routeName);
               }),
           ListTile(
               selectedTileColor: _isDark ? Colors.red : Colors.green,
-              selected: widget._isLanguageSelected,
+              selected: widget.selectedPage == SelectedPage.LANGUAGE,
               leading: Icon(
                 Icons.language,
                 color: Theme.of(context).iconTheme.color,
@@ -97,9 +91,7 @@ class _AppDrawerState extends State<AppDrawer> {
               title: Text(AppLocalization.of(context).language),
               onTap: () {
                 setState(() {
-                  widget._isMovieSelected = false;
-                  widget._isFavoriteSelected = false;
-                  widget._isLanguageSelected = true;
+                  widget.selectedPage = SelectedPage.LANGUAGE;
                 });
                 Navigator.of(context)
                     .pushReplacementNamed(LanguageScreen.routeName);

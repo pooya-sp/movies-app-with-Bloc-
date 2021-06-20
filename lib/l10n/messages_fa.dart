@@ -1,10 +1,3 @@
-// DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a de locale. All the
-// messages from the main program should be duplicated here with the same
-// function name.
-
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 

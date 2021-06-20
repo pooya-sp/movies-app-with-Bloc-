@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/UI/widgets/app_drawer.dart';
+import 'package:movies_app/helpers/config.dart';
 import 'package:movies_app/locale/app_localization.dart';
-import 'package:movies_app/modals/config.dart';
-import 'package:movies_app/widgets/app_drawer.dart';
 
 class LanguageScreen extends StatefulWidget {
   static const routeName = '/language-screen';

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/providers/movies_provider.dart';
+import 'package:movies_app/data/modals/movie.dart';
 
 class CardWidget extends StatelessWidget {
   final List<Movie> movies;
@@ -32,12 +32,15 @@ class CardWidget extends StatelessWidget {
             ),
           ),
           Container(
+            padding: EdgeInsets.all(4),
             alignment: Alignment.center,
             child: Text(
               '${movies[listIndex].title}',
               textAlign: TextAlign.center,
               maxLines: 2,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 16,
+              ),
             ),
           ),
         ],

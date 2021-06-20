@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/UI/screens/all_movies_screen.dart';
+import 'package:movies_app/business_logic/Blocs/movies_bloc.dart';
 import 'package:movies_app/locale/app_localization.dart';
-import 'package:movies_app/screens/all_movies_screen.dart';
 
 import 'package:sizer/sizer.dart';
 
-enum MovieState {
-  TOP_RATED,
-  POPULAR,
-  SERIES,
-}
-
 class MoviesTitleAndButton extends StatelessWidget {
   final title;
-  MovieState movieState;
+  MovieType movieType;
   MoviesTitleAndButton(this.title);
   void _instantiateMovieState() {
     switch (title) {
       case 'Top rated movies':
-        movieState = MovieState.TOP_RATED;
+        movieType = MovieType.TOPRATED;
         break;
       case 'Popular movies':
-        movieState = MovieState.POPULAR;
+        movieType = MovieType.POPULAR;
         break;
       case 'Top rated series':
-        movieState = MovieState.SERIES;
+        movieType = MovieType.SERIES;
         break;
     }
   }
@@ -51,8 +46,6 @@ class MoviesTitleAndButton extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           child: Text(
             getTitle(context),
-            // textScaleFactor:
-            //     MediaQuery.of(context).textScaleFactor.clamp(1.0, 2.0),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
           ),
         ),
@@ -61,7 +54,7 @@ class MoviesTitleAndButton extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pushNamed(
               AllMoviesScreen.routeName,
-              arguments: movieState,
+              arguments: movieType,
             );
           },
           child: Row(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/providers/movies_provider.dart';
-import 'package:movies_app/screens/movies_detail_screen.dart';
-import 'package:movies_app/widgets/card_widget.dart';
-import 'package:movies_app/widgets/movies_title_and_button.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen.dart';
+import 'package:movies_app/UI/widgets/card_widget.dart';
+import 'package:movies_app/business_logic/Blocs/movies_bloc.dart';
+import 'package:movies_app/business_logic/states/movie_states.dart';
+import 'package:movies_app/data/modals/movie.dart';
 
 // screen that is shown when user taps on All button in movies-list-screen
 class AllMoviesScreen extends StatefulWidget {
@@ -14,13 +15,14 @@ class AllMoviesScreen extends StatefulWidget {
 }
 
 class _AllMoviesScreenState extends State<AllMoviesScreen> {
-  MoviesProvider moviesProvider;
+  MovieLoadSuccess movieLoadSuccess;
   var _isInit = false;
-  MovieState movieState;
+  MovieType movieType;
   List<Movie> movies;
   @override
   void initState() {
-    moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
+    movieLoadSuccess = BlocProvider.of<MoviesBloc>(context, listen: false).state
+        as MovieLoadSuccess;
     super.initState();
   }
 
@@ -28,33 +30,33 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInit) {
-      movieState = ModalRoute.of(context).settings.arguments as MovieState;
+      movieType = ModalRoute.of(context).settings.arguments as MovieType;
       _instantiateMoviesList();
       _isInit = true;
     }
   }
 
   void _instantiateMoviesList() {
-    switch (movieState) {
-      case MovieState.TOP_RATED:
-        movies = moviesProvider.topRatedMovies;
+    switch (movieType) {
+      case MovieType.TOPRATED:
+        movies = movieLoadSuccess.topRatedMovies;
         break;
-      case MovieState.POPULAR:
-        movies = moviesProvider.popularMovies;
+      case MovieType.POPULAR:
+        movies = movieLoadSuccess.popularMovies;
         break;
-      case MovieState.SERIES:
-        movies = moviesProvider.series;
+      case MovieType.SERIES:
+        movies = movieLoadSuccess.series;
         break;
     }
   }
 
   Widget get _appBarText {
-    switch (movieState) {
-      case MovieState.TOP_RATED:
+    switch (movieType) {
+      case MovieType.TOPRATED:
         return Text('Top rated movies');
-      case MovieState.POPULAR:
+      case MovieType.POPULAR:
         return Text('Popular movies');
-      case MovieState.SERIES:
+      case MovieType.SERIES:
         return Text('Top rated series');
       default:
         return Text('');

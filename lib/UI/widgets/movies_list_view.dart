@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/screens/movies_detail_screen.dart';
-import 'package:movies_app/providers/movies_provider.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen.dart';
+import 'package:movies_app/data/modals/movie.dart';
 import 'package:sizer/sizer.dart';
 
 class MoviesListView extends StatelessWidget {
@@ -14,7 +14,7 @@ class MoviesListView extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: orientation == Orientation.portrait
-          ? (MediaQuery.of(context).size.height * 0.32)
+          ? (MediaQuery.of(context).size.height * 0.30)
           : (MediaQuery.of(context).size.height * 0.45),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -56,18 +56,19 @@ class MoviesListView extends StatelessWidget {
                         ),
                       ),
                       Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: orientation == Orientation.portrait
-                              ? MediaQuery.of(context).size.height * 0.06
-                              : MediaQuery.of(context).size.height * 0.08,
-                          alignment: Alignment.center,
-                          child: Text(
-                            '${movies[index].title}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 9.sp),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          )),
+                        width: MediaQuery.of(context).size.width,
+                        height: orientation == Orientation.portrait
+                            ? MediaQuery.of(context).size.height * 0.05
+                            : MediaQuery.of(context).size.height * 0.08,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${movies[index].title}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 9.sp),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ),
                     ],
                   ),
                 ),

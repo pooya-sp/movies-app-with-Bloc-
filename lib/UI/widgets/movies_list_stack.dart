@@ -1,10 +1,11 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/providers/movies_provider.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen.dart';
+import 'package:movies_app/data/modals/movie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:movies_app/screens/movies_detail_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class MoviesListStack extends StatefulWidget {
@@ -19,6 +20,8 @@ class _MoviesListStackState extends State<MoviesListStack> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+
     return Container(
         width: MediaQuery.of(context).size.width,
         height: (MediaQuery.of(context).size.height * 0.6),
@@ -46,12 +49,11 @@ class _MoviesListStackState extends State<MoviesListStack> {
               ),
             ),
             Positioned(
-              top: AppBar().preferredSize.height + 10,
+              top: screenSize.height * 0.1,
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: CarouselSlider(
                   options: CarouselOptions(
-                    // height: 200.0,
                     enlargeCenterPage: true,
                     autoPlay: true,
                     viewportFraction: 0.6,
@@ -109,11 +111,11 @@ class _MoviesListStackState extends State<MoviesListStack> {
             Positioned(
               bottom: 0,
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.2,
+                height: MediaQuery.of(context).size.height * 0.25,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(color: Colors.black54),
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.all(12),
                   child: Column(
                     children: [
                       FittedBox(
@@ -128,7 +130,7 @@ class _MoviesListStackState extends State<MoviesListStack> {
                           ),
                         ),
                       ),
-                      Text(
+                      AutoSizeText(
                         widget.movies[_currentIndex].overview,
                         style: TextStyle(color: Colors.white, fontSize: 9.sp),
                         maxLines: 4,
