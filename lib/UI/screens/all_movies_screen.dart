@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/UI/screens/movies_detail_screen.dart';
-import 'package:movies_app/UI/widgets/card_widget.dart';
-import 'package:movies_app/business_logic/Blocs/movies_bloc.dart';
-import 'package:movies_app/business_logic/states/movie_states.dart';
+import 'package:movies_app/UI/UI-Utils/card_component.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen/movies_detail_screen.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/states/movie_states.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/movies_bloc.dart';
 import 'package:movies_app/data/modals/movie.dart';
 
 // screen that is shown when user taps on All button in movies-list-screen
@@ -87,7 +87,7 @@ class _AllMoviesScreenState extends State<AllMoviesScreen> {
                   Navigator.pushNamed(ctx, MoviesDetailScreen.routeName,
                       arguments: movies[index]);
                 },
-                child: CardWidget(movies, index),
+                child: CardComponent(movies, index),
               );
             }),
       ),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/UI/screens/movies_detail_screen.dart';
+import 'package:intl/intl.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen/movies_detail_screen.dart';
 import 'package:movies_app/data/modals/movie.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,9 +15,10 @@ class MoviesListView extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: orientation == Orientation.portrait
-          ? (MediaQuery.of(context).size.height * 0.30)
+          ? (MediaQuery.of(context).size.height * 0.32)
           : (MediaQuery.of(context).size.height * 0.45),
       child: ListView.builder(
+        reverse: Intl.defaultLocale == 'fa_IR' ? true : false,
         scrollDirection: Axis.horizontal,
         itemCount: (movies.length - 50).isNegative ? 0 : movies.length - 50,
         itemBuilder: (ctx, index) {
@@ -56,17 +58,18 @@ class MoviesListView extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.all(8),
                         width: MediaQuery.of(context).size.width,
                         height: orientation == Orientation.portrait
-                            ? MediaQuery.of(context).size.height * 0.05
+                            ? MediaQuery.of(context).size.height * 0.06
                             : MediaQuery.of(context).size.height * 0.08,
                         alignment: Alignment.center,
                         child: Text(
                           '${movies[index].title}',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 9.sp),
+                          style: TextStyle(fontSize: 8.sp),
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                          maxLines: 1,
                         ),
                       ),
                     ],

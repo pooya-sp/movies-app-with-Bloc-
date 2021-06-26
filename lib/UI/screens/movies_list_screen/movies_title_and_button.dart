@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/UI/screens/all_movies_screen.dart';
-import 'package:movies_app/business_logic/Blocs/movies_bloc.dart';
-import 'package:movies_app/locale/app_localization.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/movies_bloc.dart';
+import 'package:movies_app/helpers/locale/app_localization.dart';
 
 import 'package:sizer/sizer.dart';
 

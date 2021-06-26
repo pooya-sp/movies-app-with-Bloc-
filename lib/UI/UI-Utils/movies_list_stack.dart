@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/UI/screens/movies_detail_screen.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen/movies_detail_screen.dart';
 import 'package:movies_app/data/modals/movie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';

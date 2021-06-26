@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/business_logic/events/movie_events.dart';
-import 'package:movies_app/business_logic/states/movie_states.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/events/movie_events.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/states/movie_states.dart';
 import 'package:movies_app/data/modals/movie.dart';
 import 'package:movies_app/data/repositories/movie_repository.dart';
 

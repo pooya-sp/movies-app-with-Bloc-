@@ -3,44 +3,26 @@ import 'package:hive/hive.dart';
 import 'package:movies_app/UI/screens/all_movies_screen.dart';
 import 'package:movies_app/UI/screens/favorite_movies_screen.dart';
 import 'package:movies_app/UI/screens/language_screen.dart';
-import 'package:movies_app/UI/screens/movies_detail_screen.dart';
-import 'package:movies_app/UI/screens/movies_list_screen.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen/movies_detail_screen.dart';
+import 'package:movies_app/UI/screens/movies_list_screen/movies_list_screen.dart';
 import 'package:movies_app/UI/screens/web_view_screen.dart';
-import 'package:movies_app/business_logic/Blocs/database_bloc.dart';
-import 'package:movies_app/business_logic/Blocs/favorite_bloc.dart';
-import 'package:movies_app/business_logic/Blocs/movies_bloc.dart';
-import 'package:movies_app/business_logic/Blocs/trailer_bloc.dart';
+import 'package:movies_app/business_logic/Blocs/favorite-movies-screen-Bloc/favorite_screen_bloc.dart';
+import 'package:movies_app/business_logic/Blocs/movies-detail-screen-Bloc/blocs/favorite_bloc.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/movies_bloc.dart';
 import 'package:movies_app/UI/themes/custom_theme.dart';
+import 'package:movies_app/business_logic/Blocs/movies-detail-screen-Bloc/blocs/trailer_bloc.dart';
 import 'package:movies_app/helpers/config.dart';
 import 'package:movies_app/data/modals/movie.dart';
-import 'package:movies_app/helpers/db_helper.dart';
-import 'package:movies_app/locale/app_localization.dart';
-
+import 'package:movies_app/helpers/locale/app_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:sizer/sizer.dart';
 
 List<Movie> favoritesMovies;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   var appDocDirectory = await getApplicationDocumentsDirectory();
-  DBHelper.getData('favorite_movies').then(
-    (value) {
-      favoritesMovies = value
-          .map(
-            (element) => Movie(
-              posterImage: element['posterImage'],
-              title: element['title'],
-              overview: element['overview'],
-              id: element['id'],
-            ),
-          )
-          .toList();
-    },
-  );
   Hive.init(appDocDirectory.path);
   box = await Hive.openBox('hiveBox');
   String language = box.get('selectedLanguage', defaultValue: '');
@@ -76,13 +58,13 @@ class _MyAppState extends State<MyApp> {
           create: (context) => MoviesBloc(),
         ),
         BlocProvider<FavoriteBloc>(
-          create: (context) => FavoriteBloc(favoritesMovies),
-        ),
-        BlocProvider<DatabaseBloc>(
-          create: (context) => DatabaseBloc(),
+          create: (context) => FavoriteBloc(),
         ),
         BlocProvider<TrailerBloc>(
           create: (context) => TrailerBloc(),
+        ),
+        BlocProvider<FavoriteScreenBloc>(
+          create: (context) => FavoriteScreenBloc(),
         ),
       ],
       child: Sizer(builder: (context, orientation, deviceType) {

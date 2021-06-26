@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:movies_app/UI/widgets/app_drawer.dart';
-import 'package:movies_app/UI/widgets/movies_list_stack.dart';
-import 'package:movies_app/UI/widgets/movies_list_view.dart';
-import 'package:movies_app/UI/widgets/movies_title_and_button.dart';
-import 'package:movies_app/business_logic/Blocs/movies_bloc.dart';
-import 'package:movies_app/business_logic/events/movie_events.dart';
-import 'package:movies_app/business_logic/states/movie_states.dart';
+import 'package:movies_app/UI/UI-Utils/app_drawer.dart';
+import 'package:movies_app/UI/UI-Utils/movies_list_stack.dart';
+import 'package:movies_app/UI/UI-Utils/movies_list_view.dart';
+import 'package:movies_app/UI/screens/movies_list_screen/movies_title_and_button.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/events/movie_events.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/states/movie_states.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/movies_bloc.dart';
+
 import 'package:movies_app/UI/screens/search_movies_screen.dart';
+import 'package:movies_app/business_logic/Blocs/movies-detail-screen-Bloc/events/movie_detail_events.dart';
+import 'package:movies_app/business_logic/Blocs/movies-detail-screen-Bloc/blocs/favorite_bloc.dart';
 
 import 'package:sizer/sizer.dart';
 
@@ -25,6 +28,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<FavoriteBloc>().add(FillFavoriteList());
     context.read<MoviesBloc>().add(MovieRequested());
   }
 

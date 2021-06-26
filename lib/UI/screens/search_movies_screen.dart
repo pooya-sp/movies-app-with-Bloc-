@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/UI/screens/movies_detail_screen.dart';
-import 'package:movies_app/business_logic/Blocs/movies_bloc.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen/movies_detail_screen.dart';
+import 'package:movies_app/business_logic/Blocs/movie-list-screen-Bloc/movies_bloc.dart';
 import 'package:movies_app/helpers/config.dart';
 import 'package:movies_app/data/modals/movie.dart';
 import 'package:movies_app/helpers/db_helper.dart';
-import 'package:movies_app/locale/app_localization.dart';
+import 'package:movies_app/helpers/locale/app_localization.dart';
 
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -145,14 +145,14 @@ class SearchData extends SearchDelegate<String> {
                     ListTile(
                       onTap: () async {
                         this.close(context, query);
-                        final response = await Navigator.pushNamed(
+                        Navigator.pushNamed(
                             context, MoviesDetailScreen.routeName,
-                            arguments: suggestionList[index]) as Movie;
+                            arguments: suggestionList[index]);
                         DBHelper.insert('movies_table', {
-                          'posterImage': response.posterImage,
-                          'title': response.title,
-                          'overview': response.overview,
-                          'id': response.id,
+                          'posterImage': suggestionList[index].posterImage,
+                          'title': suggestionList[index].title,
+                          'overview': suggestionList[index].overview,
+                          'id': suggestionList[index].id,
                         });
                       },
                       leading: CircleAvatar(

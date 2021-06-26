@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/data/modals/movie.dart';
 
-class CardWidget extends StatelessWidget {
+class CardComponent extends StatelessWidget {
   final List<Movie> movies;
   final int listIndex;
-  CardWidget(this.movies, this.listIndex);
+  CardComponent(this.movies, this.listIndex);
   @override
   Widget build(BuildContext context) {
     var placeholder = AssetImage('assets/images/placeholder.png');

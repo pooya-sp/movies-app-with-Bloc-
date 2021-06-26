@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/UI/screens/favorite_movies_screen.dart';
 import 'package:movies_app/UI/screens/language_screen.dart';
 import 'package:movies_app/helpers/config.dart';
-import 'package:movies_app/locale/app_localization.dart';
+import 'package:movies_app/helpers/locale/app_localization.dart';
 
 enum SelectedPage {
   MOVIES,

@@ -3,5 +3,3 @@ abstract class MovieEvent {
 }
 
 class MovieRequested extends MovieEvent {}
-
-class TrailerRequested extends MovieEvent {}

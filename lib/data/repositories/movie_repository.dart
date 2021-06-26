@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:movies_app/data/dataProviders/movie_api.dart';
 import 'package:movies_app/data/modals/movie.dart';
+import 'package:movies_app/helpers/db_helper.dart';
 
 class MovieRepository {
   MovieAPI movieAPI = MovieAPI();

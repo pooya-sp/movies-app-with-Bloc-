@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/UI/widgets/movie_overview.dart';
-import 'package:movies_app/UI/widgets/video_player.dart';
-import 'package:movies_app/business_logic/Blocs/favorite_bloc.dart';
-import 'package:movies_app/business_logic/Blocs/trailer_bloc.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen/movie_overview.dart';
+import 'package:movies_app/UI/screens/movies_detail_screen/video_player.dart';
+import 'package:movies_app/business_logic/Blocs/movies-detail-screen-Bloc/blocs/trailer_bloc.dart';
+import 'package:movies_app/business_logic/Blocs/movies-detail-screen-Bloc/events/movie_detail_events.dart';
+import 'package:movies_app/business_logic/Blocs/movies-detail-screen-Bloc/blocs/favorite_bloc.dart';
+import 'package:movies_app/business_logic/Blocs/movies-detail-screen-Bloc/states/movie_detail_states.dart';
 import 'package:movies_app/data/modals/movie.dart';
 
 import 'package:provider/provider.dart';
@@ -17,12 +19,6 @@ class MoviesDetailScreen extends StatefulWidget {
 }
 
 class _MoviesDetailScreenState extends State<MoviesDetailScreen> {
-  // Future<String> _getVideoId(String id, context) async {
-  //   final videoUrl = await Provider.of<MoviesProvider>(context, listen: false)
-  //       .getMovieTrailers(int.parse(id));
-  //   return YoutubePlayer.convertUrlToId(videoUrl);
-  // }
-
   void _showSnackBar(Movie movie, bool isFavorite) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: RichText(
@@ -48,7 +44,9 @@ class _MoviesDetailScreenState extends State<MoviesDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final movieData = ModalRoute.of(context).settings.arguments as Movie;
-    context.read<TrailerBloc>().add(int.parse(movieData.id));
+    context
+        .read<TrailerBloc>()
+        .add(MovieTrailerRequested(int.parse(movieData.id)));
     var placeholder = AssetImage('assets/images/placeholder.png');
     var _orientation = MediaQuery.of(context).orientation;
     var _screenHeight = MediaQuery.of(context).size.height;
@@ -61,36 +59,52 @@ class _MoviesDetailScreenState extends State<MoviesDetailScreen> {
         appBar: AppBar(
           title: Text(movieData.title),
           actions: [
-            // final favoriteBloc = BlocProvider.of<FavoriteBloc>(ctx);
-            BlocConsumer<FavoriteBloc, List<Movie>>(
+            BlocConsumer<FavoriteBloc, MovieDetailState>(
               listener: (context, state) {
-                final isFavorite = state.contains(movieData);
-                _showSnackBar(movieData, isFavorite);
+                if (state is FavoriteMovieLoadSuccess) {
+                  final isFavorite = state.favorites.contains(movieData);
+                  _showSnackBar(movieData, isFavorite);
+                }
               },
-              builder: (context, favorites) {
-                return IconButton(
-                  onPressed: () {
-                    context.read<FavoriteBloc>().add(movieData);
-                  },
-                  icon: Icon(favorites.contains(movieData)
-                      ? Icons.favorite
-                      : Icons.favorite_border),
-                );
+              builder: (context, state) {
+                if (state is FavoriteMovieLoadSuccess) {
+                  return IconButton(
+                    onPressed: () {
+                      context
+                          .read<FavoriteBloc>()
+                          .add(FavoriteMovieRequested(movieData));
+                    },
+                    icon: Icon(state.favorites.contains(movieData)
+                        ? Icons.favorite
+                        : Icons.favorite_border),
+                  );
+                } else {
+                  return Center();
+                }
               },
             ),
           ],
         ),
         body: ListView(
           children: [
-            BlocBuilder<TrailerBloc, String>(builder: (ctx, url) {
-              if (url == null) {
+            BlocBuilder<TrailerBloc, MovieDetailState>(builder: (ctx, state) {
+              if (state is MovieTrailerLoadInProgress) {
                 return Container(
                   height: _screenHeight * 0.55,
                   width: double.infinity,
                   decoration: BoxDecoration(color: Colors.black),
                 );
               } else {
-                if (url.contains('error')) {
+                if (state is MovieTrailerLoadSuccess) {
+                  final videoUrl = YoutubePlayer.convertUrlToId(state.url);
+                  return Container(
+                    height: _orientation == Orientation.landscape
+                        ? _screenHeight * 0.5
+                        : _screenHeight * 0.55,
+                    width: double.infinity,
+                    child: VideoPlayerScreen(videoUrl),
+                  );
+                } else {
                   return Container(
                     width: double.infinity,
                     height: _screenHeight * 0.55,
@@ -102,15 +116,6 @@ class _MoviesDetailScreenState extends State<MoviesDetailScreen> {
                         return Image(image: placeholder);
                       },
                     ),
-                  );
-                } else {
-                  final videoUrl = YoutubePlayer.convertUrlToId(url);
-                  return Container(
-                    height: _orientation == Orientation.landscape
-                        ? _screenHeight * 0.5
-                        : _screenHeight * 0.55,
-                    width: double.infinity,
-                    child: VideoPlayerScreen(videoUrl),
                   );
                 }
               }
